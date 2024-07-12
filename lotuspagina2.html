@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotus2</title>
+    <link rel="stylesheet" href="styleteo2.css">
+    <style>
+        .upload-button-container {
+            text-align: center;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #fileUpload {
+            display: none;
+        }
+        .upload-label {
+            display: inline-block;
+            cursor: pointer;
+        }
+        .upload-label img {
+            width: 100px;
+            height: auto;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
+    <script>
+        function navigateToLotuspagina3() {
+            window.location.href = 'lotuspagina3.html';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const fileUpload = document.getElementById('fileUpload');
+
+            fileUpload.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file && file.type === 'application/pdf') {
+                    const reader = new FileReader();
+                    reader.onload = function() {
+                        const typedarray = new Uint8Array(this.result);
+
+                        pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                            const numPages = pdf.numPages;
+                            let textContent = "";
+
+                            const loadPageText = async (pageNum) => {
+                                const page = await pdf.getPage(pageNum);
+                                const textContentObj = await page.getTextContent();
+                                return textContentObj.items.map(item => item.str).join(" ");
+                            };
+
+                            const extractText = async () => {
+                                for (let i = 1; i <= numPages; i++) {
+                                    const pageText = await loadPageText(i);
+                                    textContent += pageText + " ";
+                                }
+                                
+                                localStorage.setItem('extractedText', textContent);
+                                navigateToLotuspagina3();
+                            };
+
+                            extractText();
+                        });
+                    };
+                    reader.readAsArrayBuffer(file);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="page-content">
+    <div class="text2">
+        <h2>Upload your textbook</h2>
+    </div>
+    <div class="upload-button-container">
+        <label for="fileUpload" class="upload-label">
+            <img src="https://aaah0mnbncqtinas.public.blob.vercel-storage.com/F1f1Ilt-no-background-36CVoY21Fz3CY5kxszm9Bmlw0B0idv.png" alt="Upload Button">
+        </label>
+        <input type="file" id="fileUpload" name="fileUpload">
+    </div>
+</div>
+
+</body>
+</html>
