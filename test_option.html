@@ -1,0 +1,101 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Options</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Choose Test Type and Difficulty</h1>
+    <form method="POST">
+        <label for="test_type">Test Type:</label>
+        <select id="test_type" name="test_type" required>
+            <option value="multiple choice">Multiple Choice</option>
+            <option value="questionary">Questionary</option>
+        </select>
+        <br><br>
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty" name="difficulty" required>
+            <option value="trivial">Trivial</option>
+            <option value="medium">Medium</option>
+            <option value="expert">Expert</option>
+        </select>
+        <br><br>
+        <button type="submit">Create Test</button>
+    </form>
+    <br>
+    <a href="{{ url_for('select_document') }}">Back</a>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Test Page</title>
+    <link rel="stylesheet" href="styleteo2.css">
+    <style>
+        .response-content {
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+    
+    </style>
+</head>
+<body>
+    <h1>Choose Test Type and Difficulty</h1>
+    <form method="POST">
+        <label for="test_type">Test Type:</label>
+        <select id="test_type" name="test_type" required>
+            <option value="multiple choice">Multiple Choice</option>
+            <option value="questionary">Questionary</option>
+        </select>
+        <br><br>
+        
+        <br><br>
+       
+    </form>
+    <br>
+    
+
+    <div class="text3">
+        <h2>CHOOSE DIFFICULTY</h2>
+    </div>
+    <button id="generalButton" class="general">TRIVIAL</button>
+    <br>
+    <button id="mediumButton" class="medium">MEDIUM</button>
+    <br>
+    <button id="expertButton" class="expert">EXPERT</button>
+
+    <script>
+        async function createTest(difficulty) {
+            const text = localStorage.getItem('extractedText');
+            const testType = document.getElementById('test_type').value;
+            
+            if (!text) {
+                alert('No text found. Please upload a PDF first.');
+                return;
+            }
+
+            const response = await fetch(`http://127.0.0.1:5000/create-test?difficulty=${difficulty}&text=${encodeURIComponent(text)}&type=${testType}`);
+            const data = await response.json();
+
+            localStorage.setItem('apiResponse', data.response);
+            window.location.href = 'lotuspagina4.html';
+        }
+
+        document.getElementById('generalButton').addEventListener('click', () => createTest('TRIVIAL'));
+        document.getElementById('mediumButton').addEventListener('click', () => createTest('MEDIUM'));
+        document.getElementById('expertButton').addEventListener('click', () => createTest('EXPERT'));
+    </script>
+    <br> <br>
+    <button type="submit">Create Test</button> <br>
+    <br>
+    <br>
+    <a href="{{ url_for('select_document') }}">Back</a>
+</body>
+</html>

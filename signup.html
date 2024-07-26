@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="styleteo.css">
+    <!--{{ url_for('static', filename='style.css') }}-->
+    <style>
+        form {
+            display: flex;
+            flex-direction: column; /* Stacks items vertically */
+            max-width: 400px; /* Optional: To limit form width */
+            margin: 0 auto; /* Center the form horizontally */
+        }
+        
+        .form-group {
+            display: flex;
+            align-items: center; /* Align items vertically centered */
+            margin-bottom: 15px; /* Space between form groups */
+        }
+        
+        label {
+            flex: 1; /* Allow labels to take up necessary space */
+            text-align: right; /* Right-align labels */
+            margin-right: 5px; /* Space between label and input */
+        }
+        
+        input {
+            flex: 2; /* Allow inputs to take up the remaining space */
+            width: 100%; /* Full width inputs */
+            padding: 5px; /* Add some padding for better appearance */
+        }
+        </style>
+</head>
+<body>
+    <section class="bullet">
+        <div class="bullet-text">
+    <h1>Sign Up</h1></div>
+    </section>
+    <form method="POST" action="{{ url_for('signup') }}">
+        <div class="form-group">
+        <label style="color:aliceblue" for="name">Name:</label></div>
+        <input type="text" id="name" name="name" required><br></br>
+        <div class="form-group">
+        <label style="color:aliceblue" for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br></br>
+        </div>
+        <div class="form-group">
+        <label style="color:aliceblue" for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br></br></div>
+        <button type="submit">Sign Up</button>
+    </form>
+    <a href="{{ url_for('login') }}">Already have an account? Log In</a>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styleteo.css">
+    <!--{{ url_for('static', filename='style.css') }}-->
+    <style>
+    form {
+        display: flex;
+        flex-direction: column; /* Stacks items vertically */
+        max-width: 400px; /* Optional: To limit form width */
+        margin: 0 auto; /* Center the form horizontally */
+    }
+    
+    .form-group {
+        display: flex;
+        align-items: center; /* Align items vertically centered */
+        margin-bottom: 15px; /* Space between form groups */
+    }
+    
+    label {
+        flex: 1; /* Allow labels to take up necessary space */
+        text-align: right; /* Right-align labels */
+        margin-right: 10px; /* Space between label and input */
+    }
+    
+    input {
+        flex: 2; /* Allow inputs to take up the remaining space */
+        width: 100%; /* Full width inputs */
+        padding: 5px; /* Add some padding for better appearance */
+    }
+    </style>
+
+
+
+
+
+</head>
+<!--
+{{ url_for('static', filename='style.css') }}-->
+<body>
+    <section class="bullet">
+    <div class="bullet-text">
+    <h1>Login</h1></div></section>
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+        <label style="color:aliceblue" for="email">Email: </label>
+        <input type="email" id="email" name="email" required>
+        </div>
+        <br>
+        <div class="form-group">
+        <label style="color:aliceblue" for="password">Password: </label>
+        <input type="password" id="password" name="password" required></div>
+        <br>
+
+        <button style="color:black" type="submit">Login</button>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <a style="color:aliceblue" href="{{ url_for('signup') }}">Don't have an account? Sign Up</a>
+</body>
+</html>

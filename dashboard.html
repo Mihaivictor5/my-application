@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    .upload-button-container {
+        text-align: left;
+        position: fixed;
+        top: 18%;
+        left: 20%;
+        transform: translate(-50%, -50%);
+    }
+    #fileUpload {
+        display: none;
+    }
+    .upload-label {
+        display: inline-block;
+        cursor: pointer;
+    }
+    .upload-label img {
+        width: 100px;
+        height: auto;
+    }
+
+    .right-aligned {
+        text-align:right;
+        position : fixed;
+        top: 18%;
+        right:10%;
+    }
+
+</style>
+
+
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <p>Welcome, {{ user.name }}</p>
+    <a href="{{ url_for('logout') }}"class="right-aligned">Log Out</a>
+    <br><br>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+        <label for="fileUpload">Upload Document:</label>
+        <div class="upload-button-container">
+            <label for="fileUpload" class="upload-label">
+                <img src="https://aaah0mnbncqtinas.public.blob.vercel-storage.com/F1f1Ilt-no-background-36CVoY21Fz3CY5kxszm9Bmlw0B0idv.png" alt="Upload Button">
+            </label>
+            <input type="file" id="fileUpload" name="fileUpload">
+        </div>
+        <br>
+        <br>
+        <br>
+        <!--<input type="file" name="file" accept="application/pdf">-->
+        <button type="submit">Upload</button>
+    </form>
+    <br>
+    <br>
+   
+    <h2>Your Uploaded Documents:</h2>
+    <ul>
+        {% for document in documents %}
+            <li>
+                <a href="{{ url_for('choose_test', document_id=document.id) }}">{{ document.filename }}</a> - Uploaded on {{ document.date_uploaded }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
